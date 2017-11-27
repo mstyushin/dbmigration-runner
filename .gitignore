@@ -1,0 +1,17 @@
+.idea
+*.iml
+migrations/
+__pycache__/
+*.pyc
+*.so
+dist/
+wheels/
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
