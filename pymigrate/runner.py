@@ -37,7 +37,7 @@ def main() -> int:
                         '-d',
                         dest='project_dir',
                         help='Specify project directory.',
-                        default='')
+                        default='./')
     parser.add_argument('--migration-id',
                         '-m',
                         dest='migration_id',
@@ -55,7 +55,8 @@ def main() -> int:
     os_env = os.environ
     # TODO: will be great to have immutable config
     config = util.load_config(os.path.join(os.pardir, args.project_dir + '/pymigrate.conf'), app_logger)
-    config['MIGRATION_ID'] = str(args.migration_id) if args.migration_id else None
+    # Note that config dict should't have any values of None type
+    config['MIGRATION_ID'] = str(args.migration_id) if args.migration_id else 'None'
     config['ENVIRONMENT'] = str(args.environment)
     config['PROJECT_DIR'] = os.path.abspath(args.project_dir)
     if 'MIGRATIONS_DIR' not in config:

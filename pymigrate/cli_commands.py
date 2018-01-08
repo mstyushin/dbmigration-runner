@@ -175,7 +175,7 @@ def migrate(config: dict, app_logger: logger.Logger) -> bool:
     app_logger.log_with_ts('Running migrate action', logger.Levels.DEBUG)
     migrations_directory_path = os.path.join(os.pardir, config['PROJECT_DIR'] + '/' + config['MIGRATIONS_DIR'])
 
-    if not config['MIGRATION_ID']:
+    if config['MIGRATION_ID'] == 'None':
         migrations_dict = migration.get_statuses(migrations_directory_path + '/migrations.db', app_logger)
         for migration_id, state in sorted(migrations_dict.items()):
             if state[1] == 'ABSENT':
