@@ -309,6 +309,8 @@ def create_migration(config: dict, app_logger: logger.Logger) -> bool:
         app_logger.log_with_ts('Unable to extract timestamp from provided MIGRATION_ID, '
                                'will append current timestamp', logger.Levels.DEBUG)
         migration_id = str(cur_timestamp) + '-' + config['MIGRATION_ID']
+        # TODO: what about config dict immutability?
+        config['MIGRATION_ID'] = migration_id
 
     migrations_directory_path = os.path.join(os.pardir, config['PROJECT_DIR'] + '/' + config['MIGRATIONS_DIR'])
     new_migration_path = migrations_directory_path + '/' + migration_id
@@ -360,9 +362,9 @@ def run_migration(migration_id: str, config: dict, app_logger: logger.Logger) ->
                                  env=config)
         print('stdout:')
         while child.poll() is None:
-            print(reader.read())
+            print(bytes(reader.read()).decode())
             time.sleep(0.5)
-        print(reader.read())
+        print(bytes(reader.read()).decode())
         exit_code = child.returncode
         app_logger.log_with_ts("Migration executable exit code: {0}".format(exit_code), logger.Levels.DEBUG)
         os.remove(tmp_file)

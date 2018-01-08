@@ -26,8 +26,9 @@ def get_branch(project_root: str) -> str:
                              stdout=subprocess.PIPE,
                              stderr=subprocess.DEVNULL)
     exit_code = child.wait()
-    if len(child.stdout.read()) != 0:
-        branch = child.stdout.read().replace('\n', '')
+    branch = child.stdout.read().decode()
+    if len(branch) != 0:
+        branch = branch.replace('\n', '')
     else:
         return 'unknown'
     if exit_code == 0 and branch != 'HEAD':
