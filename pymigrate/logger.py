@@ -38,7 +38,7 @@ class Logger:
     def log_with_ts(self, msg: str, level: Levels) -> int:
         """
         Write :param msg: to self.path_to_log if latter was passed to class constructor. Will write
-        to stdin otherwise. This function also add a timestamp according to ISO. If log level requested
+        to stderr otherwise. This function also add a timestamp according to ISO. If log level requested
         is greater than the one used to create a Logger object then the message will be ignored.
 
         :param msg: log message to write.
@@ -49,7 +49,7 @@ class Logger:
         ts = datetime.datetime.now().astimezone().isoformat()
         if level <= self.level:
             if self.path_to_log is None:
-                return sys.stdout.write('[{0}] {1}: {2}\n'.format(ts, self.level.name, msg))
+                return sys.stderr.write('[{0}] {1}: {2}\n'.format(ts, self.level.name, msg))
             else:
                 with open(self.path_to_log, 'rw') as f:
                     return f.write('[{0}] {1}\n'.format(self.level.name, msg))
