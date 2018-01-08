@@ -2,7 +2,6 @@ Database schema migration runner
 ========================================
 
 PyMigrate is intended to run migrations in multi-environment setup (e.g. Test + Staging + PreProduction + whatever).
-Term _migration_ is being interpreted here more widely since it may include not only database schema change but also change to some service configuration.
 
 ### Requirements
 
@@ -45,7 +44,7 @@ How it works
 The state of migrations is stored to local SQLite DB located at migrations directory.
 Add *migrations.db* to your project .gitignore so each environment where project is deployed can store its own information on migrations status.
 Each migration may have following states: **DONE, FAILED, MANUAL, PENDING, SKIP, UNKNOWN**.
-Migration runner also monitor the branch where the migration status was changed. 
+Migration runner also monitors the branch where the migration status was changed. 
 
 ### Conventions
 
@@ -91,7 +90,7 @@ Migration runner also monitor the branch where the migration status was changed.
 
     `pymigrate --do done --migration-id migration_id_with_timestamp`
 
--   If *readme* file is present at migration directory it will be marked as MANUAL automatically.
+-   If *readme* file is present at migration directory then this migration will be marked as MANUAL automatically.
 
 Usage and examples
 ------------------
@@ -162,7 +161,7 @@ Options overview:
 -   *--project-dir* - path to project directory. Default is current working directory.
 
 -   *--migration-id* - migration ID to work with. It is basically unix timestamp with dash-separated name.
-    See Conventions above. Mandatory option.
+    See Conventions above. If it is empty then all *PENDING* migrations will be executed one by one. 
 
 -   *--log-level* - set logging level. All log messages will go to stderr by default.
 
